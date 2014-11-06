@@ -21,15 +21,15 @@ test_entity2 = {
 	position = {
 		x = 0,
 		y = 0
-	}
+	},
 	hitbox = {
-		xOffset = 0,
-		yOffset = 0,
+		xOffset = 2,
+		yOffset = 2,
 		xWidth = 32,
-		xHeight = 32,
-		yWidth = 32,
+		xHeight = 28,
+		yWidth = 28,
 		yHeight = 32
-	}
+	},
 	sprite = {
 		spritesheet = "grass_tile_test.png",
 		top = 0,

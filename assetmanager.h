@@ -39,6 +39,9 @@ public:
     AssetManager(){};
 
     //void loadAsset();
+    sf::Texture& getTexture(std::string textureFile);
+    sf::Font& getFont(std::string fontFile);
+
     void loadTexture(std::string textureFile);
     void loadFont(std::string fontFile);
     /*void addEntity(int entityType); ///Here, int will be the "entityType." Which will be determined from the streamed world info.

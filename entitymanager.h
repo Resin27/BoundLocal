@@ -14,6 +14,7 @@
 #include "spritecomponent.h"
 #include "inputcomponent.h"
 #include "playercomponent.h"
+#include "assetmanager.h"
 ///#include "world.h"
 
 static const int MAX_ENTITY_COUNT = 128;
@@ -21,12 +22,13 @@ static const int MAX_ENTITY_COUNT = 128;
 enum ComponentType
 {
     COMPONENT_NONE = 0,
-    COMPONENT_POSITION = 1,
-    COMPONENT_VELOCITY = 2,
-    COMPONENT_HITBOX = 4,
-    COMPONENT_SPRITE = 8,
-    COMPONENT_INPUT = 16,
-    COMPONENT_PLAYER = 32
+    COMPONENT_PROTOTYPE = 1,
+    COMPONENT_POSITION = 2,
+    COMPONENT_VELOCITY = 4,
+    COMPONENT_HITBOX = 8,
+    COMPONENT_SPRITE = 16,
+    COMPONENT_INPUT = 32,
+    COMPONENT_PLAYER = 64
 };
 
 ///Class
@@ -40,7 +42,7 @@ public:
     int entityMask[MAX_ENTITY_COUNT];
     bool worldChanged;
 
-    std::map<std::string, LuaRef> prototype;
+    std::map<std::string, int> prototype;
 
     PositionComponent positionComponent[MAX_ENTITY_COUNT];
     VelocityComponent velocityComponent[MAX_ENTITY_COUNT];

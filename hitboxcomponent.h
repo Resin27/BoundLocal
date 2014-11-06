@@ -19,7 +19,7 @@ public:
     sf::FloatRect yHitbox;
 
     HitboxComponent(){xOffset = sf::Vector2i(); yOffset = sf::Vector2i(); xHitbox = sf::FloatRect(); yHitbox = sf::FloatRect();}
-    HitboxComponent(HitboxComponent& hitboxComponent){xOffset = sf::Vector2i(); yOffset = sf::Vector2i(); xHitbox = hitboxComponent.xHitbox; yHitbox = hitboxComponent.yHitbox;}
+    HitboxComponent(HitboxComponent& hitboxComponent){xOffset = hitboxComponent.xOffset; yOffset = hitboxComponent.yOffset; xHitbox = hitboxComponent.xHitbox; yHitbox = hitboxComponent.yHitbox;}
 
 };
 

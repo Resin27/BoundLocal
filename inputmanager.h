@@ -40,20 +40,11 @@ protected:
     bool inputRegister[NUM_OF_INPUTS];
     bool keyPressed[NUM_OF_INPUTS];
     bool keyReleased[NUM_OF_INPUTS];
-    //TimedInput inputBuffer[BUFFER_SIZE];
-
- //   sf::Clock lifeClock;
 
 public:
 
     InputManager();
 
-    /*void addEntity();
-    void removeEntity(World& world, int ID);
-    void removeAllEntities(World& world);
-    void addComponent(World& world, int ID, ComponentType componentType);
-    void removeComponent(World& world, int ID, ComponentType componentType);
-    void printEntities(World world);*/
     void update();
     bool isInput(InputType inputType){return inputRegister[inputType];}
     bool isKeyPressed(InputType inputType){return keyPressed[inputType];}

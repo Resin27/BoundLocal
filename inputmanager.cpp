@@ -3,9 +3,6 @@
 InputManager::InputManager()
 {
     Parser parser("config.lua");
-    //parser.openFile("config.txt");
-    //parser.parseFileSection("config.txt", "Control");
-    //parser.closeFile();
 
     inputBinding[INPUT_UP] = parser.getKey("control", "up");
     inputBinding[INPUT_DOWN] = parser.getKey("control", "down");

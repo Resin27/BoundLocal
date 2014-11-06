@@ -37,7 +37,7 @@ void ControlSystem::registerEntities(EntityManager& eManager)
     //aiInputRegister.clear();
     for(int entityID = 0; entityID < eManager.entityCount; entityID++)
     {
-        if((eManager.entityMask[entityID] & (COMPONENT_PLAYER | COMPONENT_INPUT)) != (COMPONENT_PLAYER | COMPONENT_INPUT))
+        if((eManager.entityMask[entityID] & (COMPONENT_PLAYER | COMPONENT_INPUT)) != (COMPONENT_PLAYER | COMPONENT_INPUT) && !(eManager.entityMask[entityID] & COMPONENT_PROTOTYPE))
         {
             playerRegister.push_back(&(eManager.playerComponent[entityID]));
             playerInputRegister.push_back(&(eManager.inputComponent[entityID]));

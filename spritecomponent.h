@@ -14,8 +14,12 @@ protected:
 
 public:
 
+    std::string spritesheet;
     sf::Sprite sprite;
     int layer;
+
+    SpriteComponent(){};
+    SpriteComponent(SpriteComponent& spriteComponent){spritesheet = spriteComponent.spritesheet; layer = spriteComponent.layer;}
 
 };
 

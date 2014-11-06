@@ -2,8 +2,9 @@
 
 void PlayState::init()
 {
-    assetManager.loadTexture("oasisnewhood.png");
+    //assetManager.loadTexture("oasisnewhood.png");
     assetManager.loadTexture("grass_tile_test.png");
+    assetManager.loadTexture("arrows.png");
     assetManager.loadFont("VeraMono.ttf");
 
     ///THIS NONSENSE IS JUST DEBUGGING----------------------------------------*/
@@ -13,7 +14,11 @@ void PlayState::init()
     eManager.addComponent(0, COMPONENT_HITBOX);
     eManager.addComponent(0, COMPONENT_SPRITE);
     eManager.addComponent(0, COMPONENT_INPUT);
-    eManager.spriteComponent[0].sprite.setTexture(assetManager.loadedTexture["oasisnewhood.png"]);
+    eManager.positionComponent[0] = {0, 129};
+
+    eManager.spriteComponent[0].sprite.setTexture(assetManager.getTexture("oasisnewhood.png"));
+    //eManager.spriteComponent[0].sprite.setTexture(assetManager.loadedTexture["oasisnewhood.png"]);
+
     eManager.spriteComponent[0].sprite.setTextureRect(sf::IntRect(0,0, 19, 55));
     eManager.spriteComponent[0].layer = 0;
     eManager.velocityComponent[0].velocity = {0.f, 0.f};
@@ -66,7 +71,7 @@ void PlayState::init()
         eManager.hitboxComponent[eManager.entityCount].yHitbox.width = 28.f;
         eManager.hitboxComponent[eManager.entityCount].yHitbox.height = 32.f;
         eManager.hitboxComponent[eManager.entityCount].xOffset = {0, 2};
-        eManager.hitboxComponent[eManager.entityCount].xOffset = {2, 0};
+        eManager.hitboxComponent[eManager.entityCount].yOffset = {2, 0};
     }
     while(eManager.entityCount < 40)
     {
@@ -79,6 +84,10 @@ void PlayState::init()
         eManager.positionComponent[eManager.entityCount].position = {(eManager.entityCount-20)*32.f, 200.f-32.f};
     }
 
+    /*eManager.addEntity("test_entity1");
+    if(!((*eManager.prototype["test_entity2"]).isNil()))
+    eManager.spriteComponent[eManager.entityCount].sprite.setTexture(assetManager.loadedTexture[((*eManager.prototype["test_entity1"])["sprite"]["spritesheet"].cast<std::string>())]);
+    */
     /*eManager.addEntity();
     eManager.addComponent(2, COMPONENT_POSITION);
     eManager.addComponent(2, COMPONENT_VELOCITY);
@@ -140,7 +149,7 @@ void PlayState::handleEvents(GameEngine *game)
     }
     if(inManager.isInput(INPUT_RIGHT))
     {
-        eManager.spriteComponent[0].sprite.setTextureRect(sf::IntRect(21, 0, 40, 56));
+        eManager.spriteComponent[0].sprite.setTextureRect(sf::IntRect(21, 0, 20, 56));
         eManager.velocityComponent[0].velocity.x = 32.f*4.f;
     }
     if(inManager.isKeyPressed(INPUT_JUMP))

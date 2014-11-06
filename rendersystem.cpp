@@ -1,10 +1,5 @@
 #include "rendersystem.h"
 
-/*void RenderSystem::draw(sf::RenderWindow& window, PositionComponent *positionComponent, SpriteComponent *spriteComponent)
-{
-    spriteComponent->sprite.setPosition(positionComponent->position);
-    window.draw(spriteComponent->sprite);
-}*/
 
 void RenderSystem::registerEntities(EntityManager& eManager)
 {
@@ -18,7 +13,7 @@ void RenderSystem::registerEntities(EntityManager& eManager)
 
     for(int entityID = 0; entityID < eManager.entityCount; entityID++)
     {
-        if((eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_SPRITE)) == (COMPONENT_POSITION | COMPONENT_SPRITE))
+        if((eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_SPRITE)) == (COMPONENT_POSITION | COMPONENT_SPRITE) && !(eManager.entityMask[entityID] & COMPONENT_PROTOTYPE))
         {
             switch(eManager.spriteComponent[entityID].layer)
             {

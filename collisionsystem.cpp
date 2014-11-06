@@ -8,7 +8,7 @@ void CollisionSystem::registerEntities(EntityManager& eManager)
 
     for(int entityID = 0; entityID < eManager.entityCount; entityID++)
     {
-        if((eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_HITBOX)) == (COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_HITBOX))
+        if((eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_HITBOX)) == (COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_HITBOX) && !(eManager.entityMask[entityID] & COMPONENT_PROTOTYPE))
         {
             positionRegister.push_back(&(eManager.positionComponent[entityID]));
             velocityRegister.push_back(&(eManager.velocityComponent[entityID]));
@@ -19,7 +19,7 @@ void CollisionSystem::registerEntities(EntityManager& eManager)
     for(int entityID = 0; entityID < eManager.entityCount; entityID++)
     {
         if(!((eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_HITBOX)) == (COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_HITBOX))
-           && (eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_HITBOX)) == (COMPONENT_POSITION | COMPONENT_HITBOX))
+           && (eManager.entityMask[entityID] & (COMPONENT_POSITION | COMPONENT_HITBOX)) == (COMPONENT_POSITION | COMPONENT_HITBOX) && !(eManager.entityMask[entityID] & COMPONENT_PROTOTYPE))
         {
             positionRegister.push_back(&(eManager.positionComponent[entityID]));
             hitboxRegister.push_back(&(eManager.hitboxComponent[entityID]));

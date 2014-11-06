@@ -23,7 +23,6 @@ public:
     //void unregisterEntity(int entityID);
     void registerEntities(EntityManager& eManager);
     void update(float dt);
-    //void update(EntityManager& eManager, float dt);
 
 };
 

@@ -3,6 +3,9 @@
 #include "parser.h"
 EntityManager::EntityManager()
 {
+    //Parser parser("testentity.lua");
+    //std::cout << "Wait did it actually do it?" << std::endl;
+    //luaState = parser.getLuaState();
     entityCount = 0;
     {
         for(int i = 0; i < MAX_ENTITY_COUNT; i++)
@@ -24,16 +27,69 @@ void EntityManager::addEntity(const std::string& entityType)
 {
     if(entityCount < MAX_ENTITY_COUNT)
     {
-        Parser parser("testentity.lua");
-        std::map<std::string, LuaRef>::iterator it = prototype.find(entityType);
+        std::map<std::string, int>::iterator it = prototype.find(entityType);
         if(it == prototype.end())
         {
-            ///prototype[entityType](parser.getSection(entityType));
-            prototype.insert(std::pair<std::string, LuaRef>(entityType, parser.getSection(entityType)));
-            ///Load the EntityType from file.
+            Parser parser("testentity.lua");
+            LuaRef proto (parser.getLuaState(), parser.getSection(entityType));
+
+            entityCount++; ///This is going to create the new prototyped Entity.
+            prototype[entityType] = entityCount;
+
+            if((entityMask[entityCount] & COMPONENT_PROTOTYPE) == COMPONENT_NONE)
+                entityMask[entityCount] += COMPONENT_PROTOTYPE;
+
+            if(!proto["position"].isNil())
+            {
+                if((entityMask[entityCount] & COMPONENT_POSITION) == COMPONENT_NONE)
+                    entityMask[entityCount] += COMPONENT_POSITION;
+                positionComponent[entityCount] = {0, 0};
+            }
+
+            if(!proto["velocity"].isNil())
+            {
+                if((entityMask[entityCount] & COMPONENT_VELOCITY) == COMPONENT_NONE)
+                    entityMask[entityCount] += COMPONENT_VELOCITY;
+                velocityComponent[entityCount] = {0, 0};
+            }
+
+            if(!proto["hitbox"].isNil())
+            {
+                if((entityMask[entityCount] & COMPONENT_HITBOX) == COMPONENT_NONE)
+                    entityMask[entityCount] += COMPONENT_HITBOX;
+                LuaRef hitbox = proto["hitbox"];
+                hitboxComponent[entityCount].xHitbox.width = hitbox["xWidth"].cast<float>();
+                hitboxComponent[entityCount].xHitbox.height = hitbox["xHeight"].cast<float>();
+                hitboxComponent[entityCount].yHitbox.width = hitbox["yWidth"].cast<float>();
+                hitboxComponent[entityCount].yHitbox.height = hitbox["yHeight"].cast<float>();
+                hitboxComponent[entityCount].xOffset = {0, hitbox["xOffset"].cast<int>()};
+                hitboxComponent[entityCount].yOffset = {hitbox["yOffset"].cast<int>(), 0};
+            }
+
+            if(!proto["sprite"].isNil())
+            {
+                if((entityMask[entityCount] & COMPONENT_SPRITE) == COMPONENT_NONE)
+                    entityMask[entityCount] += COMPONENT_SPRITE;
+                ///Okay, let's say fuck this for now and just make the animationManager handle all sprite related shit.
+                LuaRef sprite = proto["sprite"];
+                spriteComponent[entityCount].spritesheet = sprite["spritesheet"].cast<std::string>();
+                spriteComponent[entityCount].layer = sprite["layer"].cast<int>();
+                //spriteComponent[entityCount].sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
+                //spriteComponent[entityCount].layer = proto["sprite"]["layer"].cast<int>();
+            }
         }
+
         ///Then it'll create that type of entity.
         entityCount++;
+        entityMask[entityCount] = entityMask[prototype[entityType]] - COMPONENT_PROTOTYPE;
+
+        positionComponent[entityCount] = PositionComponent(positionComponent[prototype[entityType]]);
+        velocityComponent[entityCount] = VelocityComponent(velocityComponent[prototype[entityType]]);
+        hitboxComponent[entityCount] = HitboxComponent(hitboxComponent[prototype[entityType]]);
+        spriteComponent[entityCount] = SpriteComponent(spriteComponent[prototype[entityType]]);
+        inputComponent[entityCount] = InputComponent(inputComponent[prototype[entityType]]);
+        playerComponent[entityCount] = PlayerComponent(playerComponent[prototype[entityType]]);
+
         worldChanged = true;
     }
 }

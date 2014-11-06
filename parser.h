@@ -38,6 +38,11 @@ public:
 
     LuaRef getSection(const std::string& section);
 
+    LuaRef createLuaRef(){return LuaRef(luaState);}
+    LuaRef createLuaRef(const LuaRef newRef){return LuaRef(luaState, newRef);}
+
+    lua_State* getLuaState(){return luaState;}
+
     void doTheThing();
 };
 

@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1401347373 source:c:\users\sam\documents\test4\assetmanager.cpp
+1415297805 source:c:\users\sam\documents\test4\assetmanager.cpp
 	"assetmanager.h"
 
-1414706029 c:\users\sam\documents\test4\assetmanager.h
+1415297841 c:\users\sam\documents\test4\assetmanager.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
@@ -27,20 +27,20 @@
 	<SFML/System.hpp>
 	"component.h"
 
-1401214516 c:\users\sam\documents\test4\hitboxcomponent.h
+1415123481 c:\users\sam\documents\test4\hitboxcomponent.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
 	"component.h"
 
-1400331428 c:\users\sam\documents\test4\spritecomponent.h
+1415296421 c:\users\sam\documents\test4\spritecomponent.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
 	<vector>
 	"component.h"
 
-1414971837 source:c:\users\sam\documents\test4\collisionsystem.cpp
+1415212623 source:c:\users\sam\documents\test4\collisionsystem.cpp
 	"collisionsystem.h"
 
 1401313131 c:\users\sam\documents\test4\collisionsystem.h
@@ -55,7 +55,7 @@
 
 1401355357 c:\users\sam\documents\test4\system.h
 
-1414971920 c:\users\sam\documents\test4\entitymanager.h
+1415122986 c:\users\sam\documents\test4\entitymanager.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
@@ -69,6 +69,7 @@
 	"spritecomponent.h"
 	"inputcomponent.h"
 	"playercomponent.h"
+	"assetmanager.h"
 
 1401067032 c:\users\sam\documents\test4\inputcomponent.h
 	<SFML/Graphics.hpp>
@@ -82,7 +83,7 @@
 	<SFML/System.hpp>
 	"component.h"
 
-1402510045 source:c:\users\sam\documents\test4\controlsystem.cpp
+1415124516 source:c:\users\sam\documents\test4\controlsystem.cpp
 	"controlsystem.h"
 
 1401067030 c:\users\sam\documents\test4\controlsystem.h
@@ -112,12 +113,12 @@
 	"hitboxcomponent.h"
 	"spritecomponent.h"
 
-1414972089 source:c:\users\sam\documents\test4\entitymanager.cpp
+1415296352 source:c:\users\sam\documents\test4\entitymanager.cpp
 	<iostream>
 	"entitymanager.h"
 	"parser.h"
 
-1414971556 c:\users\sam\documents\test4\parser.h
+1415049569 c:\users\sam\documents\test4\parser.h
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
 	<iostream>
@@ -154,13 +155,13 @@
 	"collisionsystem.h"
 	"rendersystem.h"
 
-1402703951 c:\users\sam\documents\test4\inputmanager.h
+1415050183 c:\users\sam\documents\test4\inputmanager.h
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
 	<iostream>
 	"parser.h"
 
-1399992876 c:\users\sam\documents\test4\movementsystem.h
+1415050118 c:\users\sam\documents\test4\movementsystem.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
@@ -178,7 +179,7 @@
 	"positioncomponent.h"
 	"spritecomponent.h"
 
-1409177311 source:c:\users\sam\documents\test4\inputmanager.cpp
+1415050209 source:c:\users\sam\documents\test4\inputmanager.cpp
 	"inputmanager.h"
 
 1409178964 source:c:\users\sam\documents\test4\main.cpp
@@ -191,16 +192,16 @@
 	"gamestate.h"
 	<sstream>
 
-1402509989 source:c:\users\sam\documents\test4\movementsystem.cpp
+1415124471 source:c:\users\sam\documents\test4\movementsystem.cpp
 	"movementsystem.h"
 
 1414972128 source:c:\users\sam\documents\test4\parser.cpp
 	"parser.h"
 
-1405520827 source:c:\users\sam\documents\test4\playstate.cpp
+1415298015 source:c:\users\sam\documents\test4\playstate.cpp
 	"playstate.h"
 
-1405603618 source:c:\users\sam\documents\test4\rendersystem.cpp
+1415124501 source:c:\users\sam\documents\test4\rendersystem.cpp
 	"rendersystem.h"
 
 1382201858 c:\users\sam\documents\test4\luabridge\luabridge.h

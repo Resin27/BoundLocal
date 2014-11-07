@@ -84,7 +84,7 @@ void PlayState::init()
         eManager.positionComponent[eManager.entityCount].position = {(eManager.entityCount-20)*32.f, 200.f-32.f};
     }
 
-    /*eManager.addEntity("test_entity1");
+    /*
     if(!((*eManager.prototype["test_entity2"]).isNil()))
     eManager.spriteComponent[eManager.entityCount].sprite.setTexture(assetManager.loadedTexture[((*eManager.prototype["test_entity1"])["sprite"]["spritesheet"].cast<std::string>())]);
     */

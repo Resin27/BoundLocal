@@ -34,61 +34,73 @@ void EntityManager::addEntity(const std::string& entityType)
             LuaRef proto (parser.getLuaState(), parser.getSection(entityType));
 
             entityCount++; ///This is going to create the new prototyped Entity.
-            prototype[entityType] = entityCount;
+            prototype[entityType] = entityCount-1;
 
-            if((entityMask[entityCount] & COMPONENT_PROTOTYPE) == COMPONENT_NONE)
-                entityMask[entityCount] += COMPONENT_PROTOTYPE;
+            if((entityMask[entityCount-1] & COMPONENT_PROTOTYPE) == COMPONENT_NONE)
+                entityMask[entityCount-1] += COMPONENT_PROTOTYPE;
 
             if(!proto["position"].isNil())
             {
-                if((entityMask[entityCount] & COMPONENT_POSITION) == COMPONENT_NONE)
-                    entityMask[entityCount] += COMPONENT_POSITION;
-                positionComponent[entityCount] = {0, 0};
+                if((entityMask[entityCount-1] & COMPONENT_POSITION) == COMPONENT_NONE)
+                    entityMask[entityCount-1] += COMPONENT_POSITION;
+                positionComponent[entityCount-1] = {0, 0};
             }
 
             if(!proto["velocity"].isNil())
             {
-                if((entityMask[entityCount] & COMPONENT_VELOCITY) == COMPONENT_NONE)
-                    entityMask[entityCount] += COMPONENT_VELOCITY;
-                velocityComponent[entityCount] = {0, 0};
+                if((entityMask[entityCount-1] & COMPONENT_VELOCITY) == COMPONENT_NONE)
+                    entityMask[entityCount-1] += COMPONENT_VELOCITY;
+                velocityComponent[entityCount-1] = {0, 0};
             }
 
             if(!proto["hitbox"].isNil())
             {
-                if((entityMask[entityCount] & COMPONENT_HITBOX) == COMPONENT_NONE)
-                    entityMask[entityCount] += COMPONENT_HITBOX;
+                if((entityMask[entityCount-1] & COMPONENT_HITBOX) == COMPONENT_NONE)
+                    entityMask[entityCount-1] += COMPONENT_HITBOX;
                 LuaRef hitbox = proto["hitbox"];
-                hitboxComponent[entityCount].xHitbox.width = hitbox["xWidth"].cast<float>();
-                hitboxComponent[entityCount].xHitbox.height = hitbox["xHeight"].cast<float>();
-                hitboxComponent[entityCount].yHitbox.width = hitbox["yWidth"].cast<float>();
-                hitboxComponent[entityCount].yHitbox.height = hitbox["yHeight"].cast<float>();
-                hitboxComponent[entityCount].xOffset = {0, hitbox["xOffset"].cast<int>()};
-                hitboxComponent[entityCount].yOffset = {hitbox["yOffset"].cast<int>(), 0};
+                hitboxComponent[entityCount-1].xHitbox.width = hitbox["xWidth"].cast<float>();
+                hitboxComponent[entityCount-1].xHitbox.height = hitbox["xHeight"].cast<float>();
+                hitboxComponent[entityCount-1].yHitbox.width = hitbox["yWidth"].cast<float>();
+                hitboxComponent[entityCount-1].yHitbox.height = hitbox["yHeight"].cast<float>();
+                hitboxComponent[entityCount-1].xOffset = {0, hitbox["xOffset"].cast<int>()};
+                hitboxComponent[entityCount-1].yOffset = {hitbox["yOffset"].cast<int>(), 0};
             }
 
             if(!proto["sprite"].isNil())
             {
-                if((entityMask[entityCount] & COMPONENT_SPRITE) == COMPONENT_NONE)
-                    entityMask[entityCount] += COMPONENT_SPRITE;
+                if((entityMask[entityCount-1] & COMPONENT_SPRITE) == COMPONENT_NONE)
+                    entityMask[entityCount-1] += COMPONENT_SPRITE;
                 ///Okay, let's say fuck this for now and just make the animationManager handle all sprite related shit.
                 LuaRef sprite = proto["sprite"];
-                spriteComponent[entityCount].spritesheet = sprite["spritesheet"].cast<std::string>();
-                spriteComponent[entityCount].layer = sprite["layer"].cast<int>();
+                spriteComponent[entityCount-1].spritesheet = sprite["spritesheet"].cast<std::string>();
+                spriteComponent[entityCount-1].layer = sprite["layer"].cast<int>();
                 //spriteComponent[entityCount].sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
                 //spriteComponent[entityCount].layer = proto["sprite"]["layer"].cast<int>();
             }
+
+            if(!proto["input"].isNil())
+            {
+                if((entityMask[entityCount-1] & COMPONENT_INPUT) == COMPONENT_NONE)
+                    entityMask[entityCount-1] += COMPONENT_INPUT;
+            }
+
+            if(!proto["player"].isNil())
+                if((entityMask[entityCount-1] & COMPONENT_PLAYER) == COMPONENT_NONE)
+                    entityMask[entityCount-1] += COMPONENT_PLAYER;
         }
 
         ///Then it'll create that type of entity.
         entityCount++;
-        entityMask[entityCount] = entityMask[prototype[entityType]] - COMPONENT_PROTOTYPE;
+        entityMask[entityCount-1] = entityMask[prototype[entityType]] - COMPONENT_PROTOTYPE;
 
-        positionComponent[entityCount] = PositionComponent(positionComponent[prototype[entityType]]);
-        velocityComponent[entityCount] = VelocityComponent(velocityComponent[prototype[entityType]]);
-        hitboxComponent[entityCount] = HitboxComponent(hitboxComponent[prototype[entityType]]);
-        spriteComponent[entityCount] = SpriteComponent(spriteComponent[prototype[entityType]]);
-        inputComponent[entityCount] = InputComponent(inputComponent[prototype[entityType]]);
-        playerComponent[entityCount] = PlayerComponent(playerComponent[prototype[entityType]]);
+        std::cout << "Prototype's ID is: " << prototype[entityType] << std::endl;
+
+        positionComponent[entityCount-1] = PositionComponent(positionComponent[prototype[entityType]]);
+        velocityComponent[entityCount-1] = VelocityComponent(velocityComponent[prototype[entityType]]);
+        hitboxComponent[entityCount-1] = HitboxComponent(hitboxComponent[prototype[entityType]]);
+        spriteComponent[entityCount-1] = SpriteComponent(spriteComponent[prototype[entityType]]);
+        inputComponent[entityCount-1] = InputComponent(inputComponent[prototype[entityType]]);
+        playerComponent[entityCount-1] = PlayerComponent(playerComponent[prototype[entityType]]);
 
         worldChanged = true;
     }
@@ -96,6 +108,18 @@ void EntityManager::addEntity(const std::string& entityType)
 
 void EntityManager::removeEntity(int ID)
 {
+    ///This block is my first attempt at making sure that the prototypes are always accounted for, even when
+    ///Entities are moved around because of removal and whatnot.
+    for(std::map<std::string,int>::iterator it = prototype.begin(); it != prototype.end(); it++)
+        if(it->second == entityCount-1)
+        {
+            std::cout << "This happened: " << it->first << ":" << it->second << "->" << ID-1 << std::endl; ///?????????
+            prototype[it->first] = ID-1;
+            std::cout << "Now prototype[" << it->first << "] = " << it->second << std::endl;
+        }
+    ///-----------------------------------------------------------------------------------------------------
+
+
     entityMask[ID] = entityMask[entityCount - 1];
     entityMask[entityCount - 1] = COMPONENT_NONE;
     positionComponent[ID] = PositionComponent(positionComponent[entityCount - 1]);
@@ -108,7 +132,7 @@ void EntityManager::removeEntity(int ID)
     inputComponent[ID] = InputComponent(inputComponent[entityCount - 1]);
     playerComponent[ID] = PlayerComponent(playerComponent[entityCount - 1]);
     //delete world.spriteComponent[entityCount];
-    --entityCount;
+    entityCount--;
     worldChanged = true;
 }
 

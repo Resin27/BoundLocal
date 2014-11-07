@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1415297805 source:c:\users\sam\documents\test4\assetmanager.cpp
+1415298706 source:c:\users\sam\documents\test4\assetmanager.cpp
 	"assetmanager.h"
 
 1415297841 c:\users\sam\documents\test4\assetmanager.h
@@ -113,7 +113,7 @@
 	"hitboxcomponent.h"
 	"spritecomponent.h"
 
-1415296352 source:c:\users\sam\documents\test4\entitymanager.cpp
+1415305001 source:c:\users\sam\documents\test4\entitymanager.cpp
 	<iostream>
 	"entitymanager.h"
 	"parser.h"
@@ -198,7 +198,7 @@
 1414972128 source:c:\users\sam\documents\test4\parser.cpp
 	"parser.h"
 
-1415298015 source:c:\users\sam\documents\test4\playstate.cpp
+1415304548 source:c:\users\sam\documents\test4\playstate.cpp
 	"playstate.h"
 
 1415124501 source:c:\users\sam\documents\test4\rendersystem.cpp
